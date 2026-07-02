@@ -45,12 +45,16 @@ export const orders = pgTable('orders', {
 export const orderItems = pgTable("order_items", {
   //  Primary Key: auto-incrementing integer
   id: serial("id").primaryKey(),
+
   // Foreign Key referencing the orders table - links this item to a specific order
   orderId: integer("order_id").references(() => orders.id).notNull(),
+
   // Foreign Key inferencing the products table - identifies which product was ordered 
   productId: integer("product_id").references(() => products.id).notNull(),
+
   // How many units of this product were ordered
   quantity: integer("quantity").notNull(),
+  
   // The price of the product at the time of purchase (snapshot, since prices may change later)
   priceAtPurchase: numeric("price_at_purchase").notNull(), 
 
