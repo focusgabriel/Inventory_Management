@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8391
 
 // Register CORS middleware - allows cross-origin requests from any frontend during developpment
 // For Production, restrict `origin` to your frontend domain(s)
-app.use(cors());
+// app.use(cors());
 
 // Register middleware: express.json() parses incoming JSON request bodies
 // this allows us to access request body data via `req.body` in route handlers
@@ -35,11 +35,18 @@ app.get("/health", async(_req:Request, res: Response) => {
     await db.execute(sql `SELECT 1`);
     // if the query succeeds, the database is connected and healthy
     res.json({status: "ok", database: "connected"});
-  } catch {
+  } catch(error) {
     // if the query fails (e.g., DB is down), return a 503 Service Unavailable status 
     res.status(503).json({
       status: "error",
-      database: "disconnected"
+      database: "disconnected",
+      error: error
     });
   }
 });
+
+app.listen(PORT, ()=> {
+  console.log(`Server running on http://localhost:${PORT}`);
+})
+
+
