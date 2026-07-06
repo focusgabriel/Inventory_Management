@@ -9,9 +9,9 @@ export default defineConfig({
   // *specifies the database typ - postgress in this case 
   dialect: "postgresql",
 
-  // the database connection URL loaded from the .env file(the "!" asserts it's non-null)
+  // the database connection URL loaded from the .env file (the "!" asserts it's non-null)
   dbCredentials: {
-    url: process.env.Database_URL!
+    url: process.env.DATABASE_URL!
   },
   verbose: true,
   strict: true,
