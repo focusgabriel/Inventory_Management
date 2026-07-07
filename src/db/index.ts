@@ -1,16 +1,10 @@
-import {drizzle} from "drizzle-orm/node-postgres"
-import {Pool} from "pg"
-import 'dotenv/config' 
-
-// Import all table definitions from the local schema file.
-// The 'as schema' alias groups them so Drizzile can map table names to their definitions.
-import * as schema from "./schema"
-
-// Create a new connection pool using the Database_URL from the environment
-// A pool maintains multiple reuseable connections for better performance
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
+import 'dotenv/config';
+import * as schema from './schema';
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-})
+    connectionString: process.env.DATABASE_URL,
+});
 
-export const db = drizzle(pool, {schema});
+export const db = drizzle(pool, { schema });
