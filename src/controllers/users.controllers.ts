@@ -4,7 +4,7 @@ export async function createUserController(req: Request, res: Response) {
   try {
     const {email} = req.body;
     if(!email || typeof email !== "string" || email.trim() === ""){
-      return res.status(400).json({error: "Email is required and must bea a non-empty string"});
+      return res.status(400).json({error: "Email is required and must be a non-empty string"});
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,7 +15,7 @@ export async function createUserController(req: Request, res: Response) {
     const user = await createUser(email.trim().toLowerCase());
     res.status(201).json(user);
   } catch (error) {
-    console.log("Error creating user:", error);
-    res.status(201).json({error: "Failed to create user"});
-  }
+    console.log(`Error creating user:${error}`);
+    res.status(500).json({newError: "Failed to create user"});
+  };
 }
