@@ -13,6 +13,15 @@ export async function createProduct(name:string, currentPrice: string, stockQuan
   return result[0] ?? null;
 }
 
+
+export async function createBulkProducts(
+  productsData: {name:string, currentPrice: string, stockQuantity:number}[]
+) {
+  const result = await db.insert(products).values(productsData).returning();
+
+  return result; // returns an array of all the newly created producted
+}
+
 export async function getAllProducts(){
   return db.select().from(products);
 }
