@@ -6,7 +6,7 @@ import { products } from "../db/schema";
 // stockQuantity defaults to 0 if not provided
 // Returns the newly created product object
 
-export async function CreateProduct(name:string, currentPrice: string, stockQuantity:number = 0) {
+export async function createProduct(name:string, currentPrice: string, stockQuantity:number = 0) {
   // Insert INTO products (name, current_price, stock_quantity) Values (?, ?, ?)RETURNING *
   const result = await db.insert(products).values({name, currentPrice, stockQuantity}).returning();
   // Return the inserted row, or null if insertion returned nothing 
