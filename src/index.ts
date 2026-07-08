@@ -4,7 +4,7 @@ import "dotenv/config";
 import {db} from "./db/index";
 import {sql} from "drizzle-orm";
 
-import { usersRouter } from "./routes/index";
+import { productsRouter, usersRouter } from "./routes/index";
 
 const app = express();
 const PORT = process.env.PORT || 8391
@@ -46,6 +46,7 @@ app.get("/health", async(_req:Request, res: Response) => {
 });
 
 app.use("/api/users", usersRouter)
+app.use("/api/product", productsRouter)
 // app.use("/api/users/getUsers", usersRouter)
 app.listen(PORT, ()=> {
   console.log(`Server running on http://localhost:${PORT}`);
