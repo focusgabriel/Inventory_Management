@@ -46,6 +46,7 @@ app.get("/health", async(_req:Request, res: Response) => {
 });
 
 app.use("/api/users", usersRouter)
+// app.use("/api/users/getUsers", usersRouter)
 app.listen(PORT, ()=> {
   console.log(`Server running on http://localhost:${PORT}`);
 })

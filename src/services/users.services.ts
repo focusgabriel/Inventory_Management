@@ -29,3 +29,14 @@ export async function createUser(email: string){
     const result = await db.insert(user).values({email}).returning();
     return result[0] ?? null;
 }
+
+
+//  =========== DELETE USER ===============
+// deletes a user by their primary key(id)
+// returns the deleted user object or null if not found
+export async function deleteUser(id:number){
+    // Delete FROM users WHERE id = ? RETURNING * 
+    const result = await db.delete(user).where(eq(user.id, id)).returning();
+    // Return the deleted row, or null if no user matched the id
+    return result[0] ?? null;
+}

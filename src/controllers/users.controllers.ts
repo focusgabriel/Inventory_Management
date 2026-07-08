@@ -1,5 +1,5 @@
 import type { Request, Response} from "express";
-import { createUser, getALLUsers, getUserById } from "../services/users.services";
+import { createUser, deleteUser, getALLUsers, getUserById } from "../services/users.services";
 
 export async function getAllUsersController(_req: Request, res:Response){
   try{
@@ -61,5 +61,25 @@ export async function getUserByIdController(req: Request, res: Response){
   } catch(error) {
     console.error("Error fetching user", error)
     res.status(500).json({ error: 'Failed to fetch user' });
+  }
+}
+
+export async function deleteUserByIdController(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    
+    if(isNaN(id) || id <= 0){
+      return res.status(400).json({error: "Invalid User ID. Must be a positive number" })
+    }
+    const user = await deleteUser(id);
+    
+    if(!user){
+      return res.status(404).json({error: "User not found"});
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.log("Error deleting user: ", error);
+    res.status(500).json({error: "Failed to delete user"});
   }
 }
