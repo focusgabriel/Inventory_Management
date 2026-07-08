@@ -12,3 +12,7 @@ export async function createProduct(name:string, currentPrice: string, stockQuan
   // Return the inserted row, or null if insertion returned nothing 
   return result[0] ?? null;
 }
+
+export async function getAllProducts(){
+  return db.select().from(products);
+}

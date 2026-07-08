@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { createProduct } from "../services/products.services";
+import { createProduct, getAllProducts } from "../services/products.services";
 
 export async function CreateProductController(req:Request, res:Response) {
   try{
@@ -31,5 +31,15 @@ export async function CreateProductController(req:Request, res:Response) {
   } catch(error) {
     console.error("Error creating product:", error);
     res.status(500).json({error: "Failed to create product"})
+  }
+}
+
+export async function getAllProductsController(_req:Request, res:Response){
+  try{
+    const proudcts = await getAllProducts();
+    res.json(proudcts);
+  } catch(error) {
+    console.error("Error fetching products", error);
+    res.status(500).json({error: "Error fetching products"})
   }
 }
