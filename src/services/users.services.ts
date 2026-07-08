@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db"
-import { users } from "../db/schema";
+import { user } from "../db/schema";
 
 
 //========== GET ALL USERS ========
@@ -8,13 +8,13 @@ import { users } from "../db/schema";
 
 export async function getALLUsers(){
     // SELECT * FROM users 
-    return db.select().from(users)
+    return db.select().from(user)
 }  
 
 // * GET USER BY ID
 // Fetches and returns every row from the user table 
 export async function getUserById(id: number) {
-    const result = await db.select().from(users).where(eq(users.id, id));
+    const result = await db.select().from(user).where(eq(user.id, id));
     return result[0] ?? null;
 }
 
@@ -26,6 +26,6 @@ export async function getUserById(id: number) {
 
 
 export async function createUser(email: string){
-    const result = await db.insert(users).values({email}).returning();
+    const result = await db.insert(user).values({email}).returning();
     return result[0] ?? null;
 }
