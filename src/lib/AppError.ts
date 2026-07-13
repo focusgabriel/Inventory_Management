@@ -10,6 +10,7 @@ export class AppError extends Error{
     this.code = code;
     this.isOperational = isOperational;
 
+    // capture a clean stack reace that starts at the call site, not inside this constructor
     if(Error.captureStackTrace){
       Error.captureStackTrace(this, AppError);
     }
