@@ -13,7 +13,7 @@ export async function CreateProductController(req:Request, res:Response) {
       return res.status(400).json({error: "currentPrice is required"});
     }
 
-    if(isNaN(Number(currentPrice)) || Number(currentPrice) < 0){
+    if(isNaN(Number(currentPrice)) || Number(currentPrice) < 0) {
       return res.status(400).json({error: "currentPrice must be a valid number"});
     }
 
