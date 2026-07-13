@@ -9,9 +9,22 @@
 import {pgTable, serial, text, timestamp, numeric, integer} from "drizzle-orm/pg-core";
 export const user = pgTable("user", {
   id: serial("id").primaryKey(),
+  name: text("name").notNull(),
   email: text("email").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  role: text("role").notNull().default("user"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-})
+});
+
+
+// ===================== CATEGORIES TABLE ===================
+//  Groups product into logical categories(e.g, Electronics, Clothing, Food) 
+export const categories = pgTable("categories", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}); 
 
 //  ======================= PRODUCTS TABLE =============================
 // stores inventory products available for purchase
@@ -20,7 +33,9 @@ export const products = pgTable('products', {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   currentPrice: numeric("current_price").notNull(),
-  stockQuantity: integer("stock_quantity").notNull().default(0)
+  stockQuantity: integer("stock_quantity").notNull().default(0),
+  categoryId: serial("category_id").references(() => categories.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 })
 
 // ===================== ORDERS TABLE ===========================
@@ -34,7 +49,7 @@ export const orders = pgTable('orders', {
 
   // Total order amount stored as a numeric value for precise calculation.
   totalAmount: numeric("total_amount").notNull(),
-  status: text("status").notNull().default('pending'),
+  status: text("status").notNull().default('Pending'),
 
   // Timestamp of when the order was created(auto-set to current time)
   createdAt: timestamp("created_at").defaultNow().notNull()
@@ -59,3 +74,4 @@ export const orderItems = pgTable("order_items", {
   priceAtPurchase: numeric("price_at_purchase").notNull(), 
 
 });
+
