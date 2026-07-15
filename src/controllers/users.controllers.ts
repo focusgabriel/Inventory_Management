@@ -1,5 +1,7 @@
-import type { Request, Response} from "express";
+import type { NextFunction, Request, Response} from "express";
 import { createUser, deleteUser, getALLUsers, getUserById } from "../services/users.services";
+import { sendCreated } from "../lib/response";
+import { Errors } from "../lib/AppError";
 
 export async function getAllUsersController(_req: Request, res:Response){
   try{
@@ -11,36 +13,23 @@ export async function getAllUsersController(_req: Request, res:Response){
   }
 }
 
-export async function createUserController(req: Request, res: Response) {
+export async function createUserController(req: Request, res: Response, next:NextFunction) {
   try {
-    const {email} = req.body;
+    const {email} = req.body as {email?: unknown};
     if(!email || typeof email !== "string" || email.trim() === ""){
-      return res.status(400).json({error: "Email is required and must be a non-empty string"});
+      throw Errors.badRequest("Email is required and must be a non-empty string", "INVALID_EMAIL")
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if(!emailRegex.test(email.trim())) {
-      return res.status(400).json({error: "Invalid email format"});
+      throw Errors.badRequest("Invalid email format", "iNVALID_EMAIL");
     }
 
     const user = await createUser(email.trim().toLowerCase());
-    res.status(201).json(user);
-  } catch (error: any) {
-    // PostgreSQL unique constraints violation code = 23505(email already exists)
-    if(error?.code === "23505"){
-      return res.status(409).json({error: "This email is already registered"});
-    }
-    console.log("Error creating user :", error);
-    if(process.env.NODE_ENV !== "production"){
-      return res.status(500).json({
-        error: "Failed to create user",
-        details: error?.message,
-        code: error?.code,
-        stack: error?.stack
-      });
-    }
-    // console.log(`Error creating user:${error}`);
-    res.status(500).json({newError: "Failed to create user"});
+    sendCreated(res, user, "User created successfully.")
+  } catch (err) {
+    // if anything goes wrong(validation fails, database is down, duplicate email), the error is caught here and passed to next(err);
+    next(err)
   };
 }
 
