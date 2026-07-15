@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1783469493058,
-      "tag": "0000_overconfident_sentry",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1783952881816,
-      "tag": "0001_thin_namorita",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1783953440471,
-      "tag": "0002_deep_stature",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1783953672504,
-      "tag": "0003_magical_cable",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1783953703110,
-      "tag": "0004_numerous_thanos",
+      "when": 1784045797166,
+      "tag": "0000_motionless_lady_ursula",
       "breakpoints": true
     }
   ]
