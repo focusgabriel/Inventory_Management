@@ -7,14 +7,15 @@ async function dropAllTables() {
   });
 
   try{
-  await client.connect();
-  //  find all tables in the public schema
+    await client.connect();
+    //  find all tables in the public schema
 
   const { rows } = await client.query(`
     SELECT tablename
     FROM pg_tables
-    WHERE schemaname = "public";
+    WHERE schemaname = 'public';
    `);
+
   if(rows.length === 0){
     console.log("No tables found");
     return;
@@ -25,7 +26,7 @@ async function dropAllTables() {
     console.log(`Dropping table: ${tablename}`)
   
   await client.query(
-    `DROP TABLES IF EXISTS "${tablename}" CASCADE;`
+    `DROP TABLE IF EXISTS "${tablename}" CASCADE;`
   );
 }
 console.log("All tables dropped successfully");
