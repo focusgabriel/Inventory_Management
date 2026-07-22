@@ -21,7 +21,7 @@ export const Errors = {
   badRequest:(message:string, code="BAD_REQUEST") => new AppError(400, message, code),
   // unAuthorized:(message:"Authenticated required", code="UNAUTHORIZED") => new AppError(401, message, code),
   unAuthorized:(message:string, code="UNAUTHORIZED") => new AppError(401, message, code),
-  forbidden:(message:"you do not have permission to do this", code="FORBIDDEN") => new AppError(400, message, code),
+  forbidden:(message="you do not have permission to do this", code="FORBIDDEN") => new AppError(400, message, code),
   notFound:(message:"Resource", code="NOT_FOUND") => new AppError(404, message, code),
   conflict:(message:string, code="CONFLICT") => new AppError(409, message, code),
   internal :(message="An Unexpected error occured", code="INTERN_ERROR") => new AppError(409, message, code),
